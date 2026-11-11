@@ -1,1 +1,365 @@
-r
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Premium Entertainment Hub</title><style>
+    :root {
+        --bg-gradient: #000000;
+        --card-bg: rgba(255, 255, 255, 0.045);
+        --card-border: rgba(255, 255, 255, 0.12);
+        --text-primary: #ffffff;
+        --text-secondary: #b3b3b3;
+        --accent-glow: linear-gradient(45deg, #ff007f, #7f00ff, #00f0ff);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        background: var(--bg-gradient);
+        color: var(--text-primary);
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        padding: 12px;
+    }
+
+    header {
+        text-align: center;
+        padding: 10px 0;
+        flex-shrink: 0;
+        z-index: 1;
+    }
+
+    /* Silver gradient for heading */
+    header h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        background: linear-gradient(180deg, #fff 0%, #bbb 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Preserve original emoji colours */
+    header h1 .emoji {
+        background: none;
+        -webkit-background-clip: initial;
+        background-clip: initial;
+        -webkit-text-fill-color: initial;
+        color: initial;
+    }
+
+    header p {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        margin-top: 2px;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 12px;
+        width: 100%;
+        flex-grow: 1;
+        padding-bottom: 8px;
+        z-index: 1;
+    }
+
+    .media-block {
+        background:
+            linear-gradient(145deg,
+                rgba(255, 255, 255, 0.105),
+                rgba(255, 255, 255, 0.025) 55%,
+                rgba(255, 255, 255, 0.055)
+            );
+
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 20px;
+
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 10px;
+
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+
+        transition:
+            transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+            border-color 0.28s ease,
+            background 0.28s ease,
+            box-shadow 0.28s ease;
+
+        isolation: isolate;
+    }
+
+    .media-block::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: var(--button-glow);
+        opacity: 0.12;
+        z-index: -1;
+        transition: opacity 0.28s ease;
+        pointer-events: none;
+    }
+
+    .media-block::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 12%;
+        width: 76%;
+        height: 1px;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.45),
+            transparent
+        );
+        opacity: 0.65;
+        pointer-events: none;
+    }
+
+    /* Individual button colours */
+    .media-block:nth-child(1) {
+        --button-glow: linear-gradient(135deg, #ff416c, #ff4b2b);
+        border-color: rgba(255, 91, 111, 0.28);
+    }
+
+    .media-block:nth-child(2) {
+        --button-glow: linear-gradient(135deg, #4776e6, #8e54e9);
+        border-color: rgba(112, 126, 255, 0.28);
+    }
+
+    .media-block:nth-child(3) {
+        --button-glow: linear-gradient(135deg, #00b09b, #96c93d);
+        border-color: rgba(0, 220, 170, 0.25);
+    }
+
+    .media-block:nth-child(4) {
+        --button-glow: linear-gradient(135deg, #8e2de2, #4a00e0);
+        border-color: rgba(160, 100, 255, 0.3);
+    }
+
+    .media-block:nth-child(5) {
+        --button-glow: linear-gradient(135deg, #f7971e, #ffd200);
+        border-color: rgba(255, 190, 50, 0.3);
+    }
+
+    .media-block:nth-child(6) {
+        --button-glow: linear-gradient(135deg, #00c6ff, #0072ff);
+        border-color: rgba(0, 170, 255, 0.3);
+    }
+
+    @media (hover: hover) {
+        .media-block:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .media-block:hover::before {
+            opacity: 0.25;
+        }
+    }
+
+    .media-block:active {
+        transform: scale(0.95);
+        background: rgba(255, 255, 255, 0.09);
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .media-block:active::before {
+        opacity: 0.4;
+    }
+
+    .block-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+        position: relative;
+        z-index: 1;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .block-desc {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        padding: 0 4px;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Screen Animation Overlay */
+    .animation-overlay {
+        position: fixed;
+        inset: 0;
+        background: #06040a;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .animation-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .premium-text {
+        font-size: 4.5rem;
+        font-weight: 900;
+        letter-spacing: 12px;
+        text-transform: uppercase;
+        background: var(--accent-glow);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        opacity: 0;
+    }
+
+    @keyframes spremium {
+        0% {
+            opacity: 0;
+            transform: scale(0.6);
+            filter: blur(10px);
+            background-position: 0% center;
+        }
+
+        30% {
+            opacity: 1;
+            filter: blur(0px);
+            transform: scale(1.05);
+        }
+
+        70% {
+            opacity: 1;
+            transform: scale(1);
+            background-position: 200% center;
+        }
+
+        100% {
+            opacity: 0;
+            transform: scale(1.4);
+            filter: blur(15px);
+            background-position: 400% center;
+        }
+    }
+
+    .animation-overlay.active .premium-text {
+        animation: spremium 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @media (min-width: 768px) {
+        .grid-container {
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+        }
+
+        .premium-text {
+            font-size: 6rem;
+            letter-spacing: 20px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .premium-text {
+            font-size: 2.8rem;
+            letter-spacing: 6px;
+        }
+
+        .block-title {
+            font-size: 1.1rem;
+        }
+
+        .block-desc {
+            font-size: 0.7rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .media-block,
+        .media-block::before,
+        .animation-overlay {
+            transition: none;
+        }
+    }
+</style>
+
+</head><body><header>
+    <h1><span class="emoji">🍿🍿</span> Movies <span class="emoji">🍿🍿</span></h1>
+    <p>Select a category</p>
+</header><div class="grid-container"><!-- Block 1 -->
+<div class="media-block" data-secure="YUhSMGNITTZMeTlpYjJ4c2VXWnNhWGd1WTJoMWNtTm9Mdz09">
+    <div class="block-title">Bollywood</div>
+    <div class="block-desc">Latest Hindi Catalog</div>
+</div>
+
+<!-- Block 2 -->
+<div class="media-block" data-secure="YUhSMGNITTZMeTlpYjJ4c2VXWnNhWGd1WTJoMWNtTm9Mdz09">
+    <div class="block-title">Hollywood</div>
+    <div class="block-desc">Dual Audio Releases</div>
+</div>
+
+<!-- Block 3 -->
+<div class="media-block" data-secure="YUhSMGNITTZMeTl1WlhjdWEyRjBaSEpoYldFdWJYa3Y=">
+    <div class="block-title">K Drama</div>
+    <div class="block-desc">Hindi & English</div>
+</div>
+
+<!-- Block 4 -->
+<div class="media-block" data-secure="YUhSMGNITTZMeTl1WlhjdWNHbHJZV2hrTG1Odkx3PT0=">
+    <div class="block-title">Anime</div>
+    <div class="block-desc">Hindi & English</div>
+</div>
+
+<!-- Block 5 -->
+<div class="media-block" data-secure="YUhSMGNITTZMeTkxYUdSdGIzWnBaWE11WW1WaGRYUjVMdz09">
+    <div class="block-title">4K</div>
+    <div class="block-desc">Movies & Webseries</div>
+</div>
+
+<!-- Block 6 -->
+<div class="media-block" data-secure="YUhSMGNITTZMeTl6Y0hKbGJXbDFiWE11WW14dlozTndiM1F1WTI5dEwzQXZjM0F0Y0hKbGJXbDFiUzF6Y0Mxd2NtVnRhWFZ0TFdKdmVDMXphWHBwYm1jdFltOXlaR1Z5TG1oMGJXdy9iVDB4">
+    <div class="block-title">⁠◠⁠‿⁠◕</div>
+    <div class="block-desc">Key Required</div>
+</div>
+
+</div><!-- Screen Animation Interstitial --><div class="animation-overlay" id="animationOverlay">
+    <div class="premium-text">SpremiumS</div>
+</div><script>
+    document.querySelectorAll('.media-block').forEach(block => {
+        block.addEventListener('click', function() {
+            const stage1 = this.getAttribute('data-secure');
+            const targetUrl = atob(atob(stage1));
+            const overlay = document.getElementById('animationOverlay');
+
+            overlay.classList.add('active');
+
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 1700);
+        });
+    });
+</script></body>
+</html>
